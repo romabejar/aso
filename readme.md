@@ -8,7 +8,7 @@
 ## Instalació del sistema operatiu ##
 
 1) Particionar disc
-   sudo fdisk /dev/sdb 
+   sudo fdisk /dev/sdb
 	o (new MBR partition table)
 	n (new partition)
 		p (primary)
@@ -37,29 +37,29 @@
 	mount /dev/sdb1 /linux
 	mkdir /linux/dev
 	mount -o bind /dev /linux/dev
-	
-		
+
+
 4) descargar el sistema i descomprimirlo en el disk
  	wget -O- ftp://asoserver.pc.ac.upc.edu/packages/aso-install.tar.gz | tar zxf -
 
 5) configurar el fstab
 	vim /etc/fstab (from the disk where the installation is being performed)
-	
+
 Add swap partition:
 	/dev/sdb2	none	swap	defaults	0	0
 Add root partition
 	/dev/sdb1	/	ext4	defaults	0	1
 Add other partitions:
 	/dev/sdb5	/usr/local	ext4	defaults	0	2
-	/dev/sdb6	/home	ext4	defaults	0	2	
+	/dev/sdb6	/home	ext4	defaults	0	2
 
 6) change root
 	chroot /linux
-	
+
 7) configure keyboard
 	dpkg-reconfigure console-data
 	dpkg-reconfigure keyboard-configuration
-	
+
 8) Install grub
 	grub-install /dev/sdb
 	update-grub
@@ -74,4 +74,14 @@ vim /etc/network/interfaces
 auto eth0
 allow-hotplug eth0
 	iface eth0 inet dhcp
-	
+
+12) install minimal gnome and stuff
+apt-get install xserver-xorg xserver-xorg-core xfonts-base xinit --no-install-recommends
+apt-get install libgl1-mesa-dri x11-xserver-utils gnome-session gnome-shell gnome-terminal gnome-control-center nautilus gnome-icon-theme --no-install-recommends
+apt-get install gdm3 --no-install-recommends
+
+13) configurar locales
+sudo apt-get install locales
+dpkg-reconfigure locales
+
+14) 
